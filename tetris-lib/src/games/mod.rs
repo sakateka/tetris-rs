@@ -61,6 +61,17 @@ pub const TANKS_TITLE: [u32; 8] = [
     0b_00000000000000000000000000000000,
 ];
 
+pub const U_TANKS: [u32; 8] = [
+    0b_00000000000000000000000000000000,
+    0b_00000000000000000000000000000000,
+    0b_00101110001110010010101010100100,
+    0b_00101010000100101010101010100100,
+    0b_00111010000100111011101100101100,
+    0b_00101010000100101010101010110100,
+    0b_00101110100100101010101010100100,
+    0b_00000000000000000000000000000000,
+];
+
 pub const SNAKE_TITLE: [u32; 8] = [
     0b_00000000000000000000000000000000,
     0b_00000000000000000000010000000000,
@@ -84,10 +95,11 @@ pub const LIFE_TITLE: [u32; 8] = [
 ];
 
 // Game titles array
-pub const GAME_TITLES: [&[u32; 8]; 5] = [
+pub const GAME_TITLES: [&[u32; 8]; 6] = [
     &TETRIS_TITLE,
     &SNAKE_TITLE,
     &TANKS_TITLE,
+    &U_TANKS,
     &RACES_TITLE,
     &LIFE_TITLE,
 ];
@@ -131,14 +143,18 @@ where
                     snake.run().await;
                 }
                 2 => {
-                    let mut tanks = TanksGame::new(prng, display, controller, timer);
+                    let mut tanks = TanksGame::new(prng, display, controller, timer, false);
                     tanks.run().await;
                 }
                 3 => {
+                    let mut tanks = TanksGame::new(prng, display, controller, timer, true);
+                    tanks.run().await;
+                }
+                4 => {
                     let mut races = RacesGame::new(prng, display, controller, timer);
                     races.run().await;
                 }
-                4 => {
+                5 => {
                     let mut life = LifeGame::new(prng, display, controller, timer);
                     life.run().await;
                 }

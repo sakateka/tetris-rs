@@ -185,10 +185,18 @@ pub struct TanksGame<'a, D, C, T> {
     enemy_count: usize,
     score: u8,
     prng: Prng,
+
+    test_mode: bool,
 }
 
 impl<'a, D: LedDisplay, C: GameController, T: Timer> TanksGame<'a, D, C, T> {
-    pub fn new(prng: Prng, display: &'a mut D, controller: &'a mut C, timer: &'a T) -> Self {
+    pub fn new(
+        prng: Prng,
+        display: &'a mut D,
+        controller: &'a mut C,
+        timer: &'a T,
+        test_mode: bool,
+    ) -> Self {
         Self {
             screen: FrameBuffer::new(),
             display,
@@ -200,6 +208,7 @@ impl<'a, D: LedDisplay, C: GameController, T: Timer> TanksGame<'a, D, C, T> {
             enemy_count: 0,
             score: 0,
             prng,
+            test_mode,
         }
     }
 
@@ -299,7 +308,7 @@ impl<'a, D: LedDisplay, C: GameController, T: Timer> TanksGame<'a, D, C, T> {
                 continue;
             }
 
-            if self.prng.next_range(10) == 0 {
+            if self.prng.next_range(10) == 0 && !self.test_mode {
                 self.enemies[i].fire();
             }
 
